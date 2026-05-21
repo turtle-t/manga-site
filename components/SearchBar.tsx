@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { searchManga, getMangaTitle, getCoverUrl, getMangaCover } from '@/lib/mangadex'
+import { getMangaTitle, getCoverUrl, getMangaCover } from '@/lib/mangadex'
 import { Manga } from '@/types/manga'
 
 const SearchBar = () => {
@@ -30,11 +30,8 @@ const SearchBar = () => {
     debounceRef.current = setTimeout(async () => {
       setIsLoading(true)
       try {
-        const data = await searchManga({
-          title: query.trim(),
-          limit: 6,
-          contentRating: ['safe']
-        })
+        const res = await fetch(`/api/search?q=${encodeURIComponent(query.trim())}&limit=6`)
+        const data = await res.json()
         setSuggestions(data.data)
         setShowSuggestions(true)
       } catch (err) {
