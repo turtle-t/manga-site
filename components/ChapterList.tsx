@@ -19,7 +19,7 @@ const ChapterList = ({ chapters, mangaId }: ChapterListProps) => {
   }
 
   return (
-    <div className='flex flex-col gap-1'>
+    <div className='flex flex-col gap-1 max-h-[500px] overflow-y-auto pr-2 scrollbar-thin'>
       {chapters.map((chapter) => {
         const scanlationGroup = chapter.relationships.find(
           r => r.type === 'scanlation_group'
